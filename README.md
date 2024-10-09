@@ -52,7 +52,7 @@ python --version
 
 ### Clone the repository:
 ```bash
-git clone https://github.com/yourusername/air-quality-monitor.git
+git clone https://github.com/pycon-rwanda/air-quality-monitor.git
 ```
 
 ### Navigate to the project directory:
