@@ -181,3 +181,20 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 - [OpenWeather](http://openweathermap.org/)
 - [AirVisual](https://www.iqair.com/)
 - Special thanks to all contributors who help improve this project!
+
+## FAQs
+- How do I get API keys for OpenWeather and AirVisual?
+  - You can sign up for an account at OpenWeather and AirVisual to obtain your API keys. Make sure to replace the placeholder keys in your .env file with the actual keys.
+
+- What locations can I query for air quality data?
+  - You can query any valid location supported by the OpenWeather and AirVisual APIs. Use city names or geographic coordinates (latitude and longitude) for more precise queries.
+
+- How often is the air quality data updated?
+  - The frequency of updates depends on the external API services you are using. Typically, they provide near-real-time data, but it's best to check the specific API documentation for more details.
+
+- Can I contribute to the project?
+  - Absolutely! We welcome contributions from everyone. Please check the CONTRIBUTING.md file for guidelines on how to contribute.
+
+- What should I do if I encounter an error?
+  - If you encounter any issues, please check the GitHub Issues section of the repository to see if it's a known problem. If not, feel free to create a new issue with detailed information about the error.
+
