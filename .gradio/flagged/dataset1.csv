@@ -1,2 +1,4 @@
 location,output,timestamp
 Kampala ,"{""error"": ""Could not fetch data. Please check the location and API key.""}",2024-10-09 22:08:59.582432
+"London, UK","{""error"": ""Could not fetch location coordinates. Please check the location name.""}",2024-10-10 15:32:07.543981
+"London, UK",,2024-10-14 16:47:12.333656
