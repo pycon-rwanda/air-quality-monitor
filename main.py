@@ -1,11 +1,11 @@
 # main.py
-
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 import gradio as gr
 import requests
 import os
 from dotenv import load_dotenv
+import time
 
 # Load environment variables from .env file
 load_dotenv()
@@ -41,7 +41,7 @@ def geocode_location(location: str) -> tuple[float, float] | None:
     could not be found, returns None.
     """
     # Construct the URL for the API call
-    geocode_url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={OPENWEATHER_API_KEY}"
+    geocode_url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid=b3789908d94f6e8732447989b53907f9"
     # Make the API call
     response = requests.get(geocode_url)
 
@@ -52,6 +52,7 @@ def geocode_location(location: str) -> tuple[float, float] | None:
         # Extract the latitude and longitude from the data
         lat = data["coord"]["lat"]
         lon = data["coord"]["lon"]
+        print(lat, lon)
         # Return the coordinates
         return lat, lon
     else:
@@ -73,6 +74,7 @@ def get_air_quality(location):
     """
     # Get the latitude and longitude of the location
     coords = geocode_location(location)
+
     if coords is None:
         # Return an error message if the location could not be found
         return {
@@ -83,7 +85,7 @@ def get_air_quality(location):
     lat, lon = coords
 
     # Construct the URL for the API call
-    aqi_url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}"
+    aqi_url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid=b3789908d94f6e8732447989b53907f9"
 
     # Make the API call
     response = requests.get(aqi_url)
@@ -97,6 +99,10 @@ def get_air_quality(location):
         advisory = get_health_advisory(aqi)
         # Return the AQI and health advisory
         return {"location": location, "aqi": aqi, "advisory": advisory}
+    elif response.status_code == 429:  # Rate limit reached
+        retry_after = int(response.headers.get('Retry-After', 10))
+        print(f"Rate limit reached. Retrying in {retry_after} seconds...")
+        time.sleep(retry_after)  # Wait for the retry period
     else:
         # If the call was unsuccessful, return an error message
         return {"error": "Could not fetch air quality data."}
@@ -181,7 +187,7 @@ async def startup_event():
     the container.
 
     """
-    interface.launch(share=True, server_name="0.0.0.0", server_port=7860)
+    interface.launch(share=True, server_name="0.0.0.0")
 
 
 if __name__ == "__main__":
